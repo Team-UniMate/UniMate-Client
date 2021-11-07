@@ -13,9 +13,9 @@ const Layout = ({ children }) => {
 
 
   return (
-        <div className="max-w-md h-screen flex flex-col mx-auto text-gray-600 antialiased">
-          {children}
-        </div>
+    <div className="max-w-md h-screen flex flex-col mx-auto text-gray-600 antialiased">
+        {children}
+   </div>
   );
 };
 

@@ -2,6 +2,7 @@ import React from 'react'
 import Link from "next/link"
 /*component*/
 import HeadCont from '../../../component_mo/common/HeadCont';
+import MainNav from '../../../component_mo/common/MainNav';
 const roommate = () => {
   const prevIcon = { background: "url('/images/prev.svg') no-repeat center" }
   return (
@@ -35,6 +36,7 @@ const roommate = () => {
             </a>
           </Link>
         </div>
+        <MainNav/>
       </div>
     </div>
   )

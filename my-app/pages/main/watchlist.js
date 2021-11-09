@@ -4,6 +4,7 @@ import React,{useState, useEffect,useRef} from 'react';
 import HeadCont from '../../component_mo/common/HeadCont';
 import Rooms from '../../component_mo/watchlist/Rooms';
 import Roommates from '../../component_mo/watchlist/Roommates';
+import MainNav from '../../component_mo/common/MainNav';
 
 const watchlist = () => {
   const [twobed, setTwobed] = useState(true);
@@ -62,6 +63,7 @@ const watchlist = () => {
           룸메이트
         </div>
       </div>
+      <MainNav/>
     {twobed ? howmanybed[0].tabpage : null}
     {fourbed ? howmanybed[1].tabpage : null}
   </div>

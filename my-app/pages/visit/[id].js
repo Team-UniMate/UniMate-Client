@@ -1,7 +1,7 @@
 import React from "react";
 
 const [id] = () => {
-  return <div>page</div>;
+  return <div>padfdge</div>;
 };
 
 export default [id];

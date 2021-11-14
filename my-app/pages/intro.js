@@ -1,19 +1,34 @@
-import Link from "next/link"
+import Image from "next/image";
+import { useRouter } from "next/router";
 const intro = () => {
+  const router = useRouter();
   return (
-    <div className="w-full h-screen flex flex-col justify-center items-center relative">
-      <div className="w-40 h-40 bg-red-100 flex justify-center items-center text-white">IMAGE</div>
-      <div className="absolute bottom-0 left-0 w-full flex flex-col items-center px-4 ">
-        <Link href="/login"
-        >
-          <a className="w-full py-4 keycolor rounded-3xl font-bold text-white tracking-wide text-center ">
-          Let's Start
-          </a>
-       </Link>
-        <span className="pt-10 pb-4">Click to continue</span>
-        </div>
-    </div>
-  )
-}
+    <div className="w-full h-screen flex flex-col  relative">
+      <div className="flex flex-col items-center mt-48">
+        <Image
+          src="/images/building.png"
+          width={150}
+          height={150}
+          alt="buildingiMG"
+        />
+        <strong className="text-3xl pt-10">UniMate</strong>
+      </div>
 
-export default intro
+      <div className="absolute bottom-0 left-0 w-full flex flex-col items-center  ">
+        <button
+          onClick={() => {
+            router.push("/login");
+          }}
+          className="w-full py-4 keycolor rounded-3xl font-bold text-white tracking-wide text-center 
+          hover:bg-purple-600 transition duration-150 ease-in-out"
+        >
+          Let's Start
+        </button>
+
+        <span className="pt-10 pb-8">Click to continue</span>
+      </div>
+    </div>
+  );
+};
+
+export default intro;

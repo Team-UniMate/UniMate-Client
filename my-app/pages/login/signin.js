@@ -4,11 +4,14 @@ import axios from "axios";
 import common from "../../data/common";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useDispatch } from "react-redux";
+import { loginApp } from "../../redux/actions/LoginAppAction";
 /*component*/
 import HeadCont from "../../component_mo/common/HeadCont";
 
 const signin = () => {
   const router = useRouter();
+  const dispatch = useDispatch();
   const [signinInput, setSigninInput] = useState({
     userId: "",
     pass: "",
@@ -23,7 +26,6 @@ const signin = () => {
   };
   const onSubmitHandler = (e) => {
     e.preventDefault();
-
     Login();
   };
 
@@ -38,7 +40,8 @@ const signin = () => {
     axios
       .post(common.baseURL + "users/signin", body)
       .then((res) => {
-        console.log(res);
+        console.log(res.data.result);
+        dispatch(loginApp(res.data.result));
         router.push("/main");
       })
       .catch((error) => {

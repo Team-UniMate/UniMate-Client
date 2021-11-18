@@ -24,7 +24,7 @@ const roommate = () => {
             <div className="flex items-center ">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                class="h-20 w-20"
+                className="h-20 w-20"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -108,7 +108,7 @@ const roommate = () => {
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            class="h-12 w-12"
+            className="h-12 w-12"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"

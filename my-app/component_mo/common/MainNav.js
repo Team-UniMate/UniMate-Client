@@ -3,13 +3,13 @@ import router from "next/router";
 const MainNav = () => {
   return (
     <div className="fixed bottom-0 left-0 px-4 bg-gray-100 w-full h-20 flex items-center justify-between">
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col items-center cursor-pointer">
         <svg
           onClick={() => {
             router.push("/main");
           }}
           xmlns="http://www.w3.org/2000/svg"
-          class="h-6 w-6"
+          className="h-6 w-6"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -24,13 +24,13 @@ const MainNav = () => {
 
         <span>홈</span>
       </div>
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col items-center cursor-pointer">
         <svg
           onClick={() => {
             router.push("/main/watchlist");
           }}
           xmlns="http://www.w3.org/2000/svg"
-          class="h-6 w-6"
+          className="h-6 w-6"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -44,13 +44,13 @@ const MainNav = () => {
         </svg>
         <span>관심목록</span>
       </div>
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col items-center cursor-pointer">
         <svg
           onClick={() => {
             router.push("/main/message");
           }}
           xmlns="http://www.w3.org/2000/svg"
-          class="h-6 w-6"
+          className="h-6 w-6"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -64,13 +64,13 @@ const MainNav = () => {
         </svg>
         <span>메시지</span>
       </div>
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col items-center cursor-pointer">
         <svg
           onClick={() => {
             router.push("/main/profile");
           }}
           xmlns="http://www.w3.org/2000/svg"
-          class="h-6 w-6"
+          className="h-6 w-6"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"

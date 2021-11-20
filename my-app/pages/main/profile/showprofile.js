@@ -1,16 +1,20 @@
 import React from "react";
+import { useSelector } from "react-redux";
+
 /*component*/
 import HeadCont from "../../../component_mo/common/HeadCont";
 import BasicBTN2 from "../../../component_mo/common/BasicBTN2";
 const showprofile = () => {
   const prevIcon = { background: "url('/images/prev.svg') no-repeat center" };
+  const user = useSelector((state) => state.app.applogin);
+
   return (
     <div className="w-full h-screen  items-center relative ">
       <HeadCont leftIcon={prevIcon} headerTitle={"프로필 정보"} />
 
       <div className="mt-14 py-6 flex flex-col items-center ">
         <span className="w-20 h-20 bg-gray-100"></span>
-        <span className="block pb-2">프렌즈cvdv</span>
+        <span className="block pb-2">{user.user_name}</span>
         <div>
           <span className="bg-gray-100 rounded-3xl p-2 mx-1">남성</span>
           <span className="bg-gray-100 rounded-3xl p-2 mx-1">학생</span>

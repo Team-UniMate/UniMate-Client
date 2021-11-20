@@ -4,6 +4,10 @@
 .keyText {
   color: #8e8cf4;
 }
-.keyBorder{
+.keyBorder {
   border-color: #8e8cf4;
+}
+
+.personal_gray_btn {
+  background-color: #e8e8e8;
 }

@@ -20,7 +20,7 @@ const visit = () => {
       </div>
       <div className="fixed bottom-4 left-0 w-full px-4">
         <button
-          className="keycolor w-full text-white py-4 rounded-2xl font-bold"
+          className="keycolor w-full text-white py-4 rounded-2xl font-bold hover:bg-purple-600"
           onClick={() => {
             router.push("/visit/1");
           }}

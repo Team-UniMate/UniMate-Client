@@ -12,7 +12,7 @@ const index = () => {
   const router = useRouter();
   return (
     <div className=" items-center">
-      <div className="px-4 flex w-full py-4 fixed left-0 top-0">
+      <div className="px-4 flex w-full py-4 fixed left-0 top-0 z-40 bg-white">
         <Image
           src="/images/building.png"
           width={30}

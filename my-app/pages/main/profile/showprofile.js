@@ -9,17 +9,26 @@ const showprofile = () => {
   const prevIcon = { background: "url('/images/prev.svg') no-repeat center" };
   const userId = useSelector((state) => state.app.applogin.user_idx);
   const [userInfo, setUserInfo] = useState([]);
-  console.log(userId);
+
   useEffect(() => {
     const getUserInfo = async () => {
       await axios
         //get /profile 로 변경해야되는데 무한로딩걸림
-        .get(common.baseURL + "users?user_idx=" + userId)
-        .then((res) => setUserInfo(res.data.results))
+        .get(common.baseURL + "profile?user_idx=" + userId)
+        .then((res) => {
+          console.log(res.data.results);
+          setUserInfo(res.data.results[0]);
+        })
         .catch((error) => console.log(error));
     };
     getUserInfo();
   }, [userId]);
+  console.log(userInfo);
+  console.log(userInfo.personality_select);
+  const personality = [];
+  // console.log(userInfo.personaliity_select.split(","));
+  // personality.push(userInfo.personality_select.split(","));
+  console.log(personality);
   return (
     <div className="w-full h-screen  items-center relative ">
       <HeadCont leftIcon={prevIcon} headerTitle={"프로필 정보"} />
@@ -28,8 +37,12 @@ const showprofile = () => {
         <span className="w-20 h-20 bg-gray-100"></span>
         <span className="block pb-2">{userInfo.user_name}</span>
         <div>
-          <span className="bg-gray-100 rounded-3xl p-2 mx-1">남성</span>
-          <span className="bg-gray-100 rounded-3xl p-2 mx-1">학생</span>
+          <span className="bg-gray-100 rounded-3xl p-2 mx-1">
+            {userInfo.sex}
+          </span>
+          <span className="bg-gray-100 rounded-3xl p-2 mx-1">
+            {userInfo.college_name}
+          </span>
         </div>
       </div>
       <span className="bg-gray-200 h-4 block"></span>
@@ -40,7 +53,15 @@ const showprofile = () => {
               <tr>
                 <td className="w-24 py-2">성향</td>
                 <td>
-                  <span className=" p-2 span rounded-3xl keyText keyBorder border mr-2">
+                  {/* {personality.map((el, index) => (
+                    <span
+                      key={index}
+                      className=" p-2 span rounded-3xl keyText keyBorder border mr-2"
+                    >
+                      {el}
+                    </span>
+                  ))} */}
+                  {/* <span className=" p-2 span rounded-3xl keyText keyBorder border mr-2">
                     온화한
                   </span>
                   <span className=" p-2 span rounded-3xl keyText keyBorder border mr-2">
@@ -48,7 +69,7 @@ const showprofile = () => {
                   </span>
                   <span className=" p-2 span rounded-3xl keyText keyBorder border mr-2">
                     사교적인
-                  </span>
+                  </span> */}
                 </td>
               </tr>
               <tr>

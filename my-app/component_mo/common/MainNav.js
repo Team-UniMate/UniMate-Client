@@ -2,7 +2,7 @@ import React from "react";
 import router from "next/router";
 const MainNav = () => {
   return (
-    <div className="fixed bottom-0 left-0 px-4 bg-gray-100 w-full h-20 flex items-center justify-between">
+    <div className="fixed z-40 bottom-0 left-0 px-4 bg-gray-100 w-full h-20 flex items-center justify-between">
       <div className="flex flex-col items-center cursor-pointer">
         <svg
           onClick={() => {

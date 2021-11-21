@@ -720,10 +720,13 @@ const Page = () => {
             <h1 className=" pt-6 text-2xl font-bold text-center">
               프로필 사진을 등록해주세요
             </h1>
-            <div className="w-full flex justify-center pt-10 relative">
+            <div className="w-full flex items-center justify-center pt-16 flex flex-col">
               <div className="p-4 w-48 h-48 bg-gray-100 rounded-2xl"></div>
-              <span className="absolute bg-black p-6 block rounded-full text-white font-bold text-2xl">
-                +
+              <span
+                className=" mt-6 keycolor hover:bg-purple-600 py-2 w-28 block rounded-full text-white font-bold text-2xl
+              cursor-pointer text-center hover:bg-purple-600"
+              >
+                등록
               </span>
             </div>
 
@@ -736,6 +739,74 @@ const Page = () => {
                 className="keycolor w-full text-white py-4 rounded-2xl font-bold hover:bg-purple-600"
               >
                 다음
+              </button>
+            </div>
+          </form>
+        </div>
+      ) : (
+        ""
+      )}
+      {pageId === "8" ? (
+        <div className="w-full h-screen h-full flex flex-col">
+          <HeadCont leftIcon={prevIcon} />
+          <div className="fixed top-14 left-0 w-full z-20 bg-gray-200 h-1 shadow-inner"></div>
+          <div className="fixed top-14 left-0 w-full z-30 bg-gray-100 h-1 shadow-inner"></div>
+          <form className="pt-16 ">
+            <div className="bg-white w-full py-6 flex flex-col items-center">
+              <span className="w-24 h-24 rounded-full block bg-gray-100 flex justify-center items-center">
+                image
+              </span>
+              <span>닉네임</span>
+              <div className="w-28 flex justify-between ">
+                <span className="bg-gray-100 inline-block px-2 py-1 rounded-xl">
+                  남성
+                </span>
+                <span className="px-2 py-1 ">한국</span>
+              </div>
+            </div>
+            <div className="bg-gray-100 w-full h-4 "></div>
+            <div className="mt-4 bg-white">
+              <div className=" p-4">
+                <strong className="w-20 inline-block">성향</strong>
+                <span className="border-2 keyBorder px-2 py-1 rounded-2xl box-content">
+                  온화한
+                </span>
+              </div>
+              <div className=" p-4">
+                <strong className="w-20 inline-block">관심사</strong>
+                <span className=" keycolor px-2 py-1 rounded-2xl">커피</span>
+              </div>
+              <div className=" p-4">
+                <strong className="w-20 inline-block">학과</strong>
+                <span>컴퓨터공학과</span>
+              </div>
+              <div className=" p-4">
+                <strong className="w-20 inline-block">생활패턴</strong>
+                <span>아침형</span>
+              </div>
+              <div className=" p-4">
+                <strong className="w-20 inline-block">흡연여부</strong>
+                <span>비흡연</span>
+              </div>
+              <div className=" p-4">
+                <strong className="w-20 inline-block">반려동물</strong>
+                <span>없음</span>
+              </div>
+              <div className=" p-4">
+                <strong className="w-20 inline-block">자기소개</strong>
+                <span>없음</span>
+              </div>
+            </div>
+            <div className="fixed bottom-4 left-0 w-full px-4">
+              <button
+                type="submit"
+                onClick={() => {
+                  router.push(`/login/signin`);
+                  console.log(router);
+                }}
+                className="keycolor w-full text-white py-4 rounded-2xl font-bold hover:bg-purple-600"
+              >
+                완료
               </button>
             </div>
           </form>

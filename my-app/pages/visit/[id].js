@@ -2,15 +2,26 @@ import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
+import { useSelector } from "react-redux";
 /*component*/
 import HeadCont from "../../component_mo/common/HeadCont";
 
 const Page = () => {
   const router = useRouter();
-
+  const user = useSelector((state) => state.app.applogin);
   const pageId = router.query.id;
   const prevIcon = { background: "url('/images/prev.svg') no-repeat center" };
   const [birthDate, setBirthDate] = useState(new Date());
+  const [inputs, setInputs] = useState({
+    birth: birthDate,
+    sex: "",
+    country_name: "",
+  });
+  console.log(inputs);
+  const onhandleChange = (e) => {
+    const { name, value } = e.target;
+    setInputs({ ...inputs, [name]: value });
+  };
 
   const [p1, setP1] = useState(false);
   const [p2, setP2] = useState(false);
@@ -195,6 +206,7 @@ const Page = () => {
               <DatePicker
                 className=" py-2 px-3 leading-normal rounded-3xl focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500 ring-opacity-90 border w-full"
                 selected={birthDate}
+                name="birth"
                 onChange={(date) => {
                   setBirthDate(date);
                 }}
@@ -202,8 +214,8 @@ const Page = () => {
               <h2 className="mt-6 pb-3">&middot; 성별을 선택해주세요</h2>
               <select
                 aria-label="Selected tab"
-                className="birth border rounded-2xl form-select w-full py-2 px-3 rounded appearance-none bg-transparent"
-                name="birth"
+                className="sex border rounded-2xl form-select w-full py-2 px-3 rounded appearance-none bg-transparent"
+                name="sex"
               >
                 <option value="">입력값 없음</option>
                 <option value="여성">여성</option>
@@ -277,7 +289,6 @@ const Page = () => {
 
             <div className="fixed bottom-4 left-0 w-full px-4">
               <button
-                type="submit"
                 onClick={() => {
                   router.push(`3`);
                 }}
@@ -418,7 +429,6 @@ const Page = () => {
             </div>
             <div className="fixed bottom-4 left-0 w-full px-4">
               <button
-                type="submit"
                 onClick={onClickPersonal}
                 className="keycolor w-full text-white py-4 rounded-2xl font-bold hover:bg-purple-600"
               >
@@ -611,7 +621,6 @@ const Page = () => {
             </div>
             <div className="fixed bottom-4 left-0 w-full px-4">
               <button
-                type="submit"
                 onClick={onClickTaste}
                 className="keycolor w-full text-white py-4 rounded-2xl font-bold hover:bg-hover-600"
               >
@@ -670,7 +679,6 @@ const Page = () => {
 
             <div className="fixed bottom-4 left-0 w-full px-4">
               <button
-                type="submit"
                 onClick={() => {
                   router.push(`6`);
                 }}
@@ -697,7 +705,6 @@ const Page = () => {
 
             <div className="fixed bottom-4 left-0 w-full px-4">
               <button
-                type="submit"
                 onClick={() => {
                   router.push(`7`);
                 }}
@@ -732,7 +739,6 @@ const Page = () => {
 
             <div className="fixed bottom-4 left-0 w-full px-4">
               <button
-                type="submit"
                 onClick={() => {
                   router.push(`8`);
                 }}
@@ -799,7 +805,6 @@ const Page = () => {
             </div>
             <div className="fixed bottom-4 left-0 w-full px-4">
               <button
-                type="submit"
                 onClick={() => {
                   router.push(`/login/signin`);
                   console.log(router);

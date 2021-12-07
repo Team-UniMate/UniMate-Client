@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import { useRouter } from "next/router";
 /*component*/
 import HeadCont from "../../component_mo/common/HeadCont";
 import axios from "axios";
 import common from "../../data/common";
 const signup = () => {
+  const router = useRouter();
   const [signupInput, setSignupInput] = useState({
     name: "",
     email: "",
@@ -25,14 +26,17 @@ const signup = () => {
       user_mail: signupInput.email,
       user_id: signupInput.userId,
       user_pwd: signupInput.pass,
-      // user_name: "test2",
-      // user_mail: "test@naver.com",
-      // user_id: "test2",
-      // user_pwd: "test2",
     };
     axios
       .post(common.baseURL + "users/signup", body)
-      .then((res) => console.log(res))
+      .then((res) => {
+        console.log(res);
+        if (res.data.result) {
+          alert("회원가입되었습니다.");
+        } else {
+          alert(error.message);
+        }
+      })
       .catch((error) => console.log(error.message));
   };
   const prevIcon = { background: "url('/images/prev.svg') no-repeat center" };
@@ -95,7 +99,6 @@ const signup = () => {
           >
             Sign up
           </button>
-
           <div className="w-full flex justify-center mt-16">
             <p>
               Already have an account?

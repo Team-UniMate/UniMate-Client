@@ -13,8 +13,8 @@ const signin = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const [signinInput, setSigninInput] = useState({
-    userId: "",
-    pass: "",
+    userId: "yoo1",
+    pass: "1234",
   });
   const handleId = (e) => {
     const { name, value } = e.target;
@@ -40,9 +40,13 @@ const signin = () => {
     axios
       .post(common.baseURL + "users/signin", body)
       .then((res) => {
-        console.log(res.data.result);
+        // alert(res.data.result.profile_status);
         dispatch(loginApp(res.data.result));
-        router.push("/main");
+        if (res.data.result.profile_status === "true") {
+          router.push("/main");
+        } else {
+          router.push("/visit");
+        }
       })
       .catch((error) => {
         console.log(error);

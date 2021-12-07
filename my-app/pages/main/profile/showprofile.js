@@ -23,12 +23,10 @@ const showprofile = () => {
     };
     getUserInfo();
   }, [userId]);
-  console.log(userInfo);
-  console.log(userInfo.personality_select);
-  const personality = [];
-  // console.log(userInfo.personaliity_select.split(","));
-  // personality.push(userInfo.personality_select.split(","));
-  console.log(personality);
+
+  let personality = String(userInfo.personality_select).split(",");
+  let interest = String(userInfo.interest_select).split(",");
+  let lifestyle = String(userInfo.life_style_select).split(",");
   return (
     <div className="w-full h-screen  items-center relative ">
       <HeadCont leftIcon={prevIcon} headerTitle={"프로필 정보"} />
@@ -53,37 +51,27 @@ const showprofile = () => {
               <tr>
                 <td className="w-24 py-2">성향</td>
                 <td>
-                  {/* {personality.map((el, index) => (
+                  {personality.map((el, index) => (
                     <span
                       key={index}
-                      className=" p-2 span rounded-3xl keyText keyBorder border mr-2"
+                      className=" p-2 span rounded-3xl keycolor text-white mr-2"
                     >
                       {el}
                     </span>
-                  ))} */}
-                  {/* <span className=" p-2 span rounded-3xl keyText keyBorder border mr-2">
-                    온화한
-                  </span>
-                  <span className=" p-2 span rounded-3xl keyText keyBorder border mr-2">
-                    적극적
-                  </span>
-                  <span className=" p-2 span rounded-3xl keyText keyBorder border mr-2">
-                    사교적인
-                  </span> */}
+                  ))}
                 </td>
               </tr>
               <tr>
                 <td className="w-24 py-2">관심사</td>
                 <td>
-                  <span className=" p-2 span rounded-3xl keycolor text-white mr-2">
-                    커피
-                  </span>
-                  <span className=" p-2 span rounded-3xl keycolor text-white mr-2">
-                    패션
-                  </span>
-                  <span className=" p-2 span rounded-3xl keycolor text-white mr-2">
-                    여행
-                  </span>
+                  {interest.map((el, index) => (
+                    <span
+                      key={index}
+                      className=" p-2 span rounded-3xl keycolor text-white mr-2"
+                    >
+                      {el}
+                    </span>
+                  ))}
                 </td>
               </tr>
             </tbody>
@@ -92,23 +80,23 @@ const showprofile = () => {
             <tbody>
               <tr className="w-full">
                 <td className="w-24 py-2">직업</td>
-                <td className="w-2/3">컴퓨터공학과</td>
+                <td className="w-2/3">{userInfo.major_name}</td>
               </tr>
               <tr className="w-full">
                 <td className="w-24 py-2">생활패턴</td>
-                <td className="w-2/3">아침형</td>
+                <td className="w-2/3">{lifestyle[0]}</td>
               </tr>
               <tr className="w-full">
                 <td className="w-24 py-2">흡연 여부</td>
-                <td className="w-2/3">비흡연</td>
+                <td className="w-2/3">{lifestyle[1]}</td>
               </tr>
-              <tr className="w-full">
+              {/* <tr className="w-full">
                 <td className="w-24 py-2">반려동물</td>
                 <td className="w-2/3">없음</td>
-              </tr>
+              </tr> */}
               <tr className="w-full">
                 <td className="w-24 py-2">자기소개</td>
-                <td className="w-2/3">안녕하세요 반갑습니다.</td>
+                <td className="w-2/3">{userInfo.self_introduce}</td>
               </tr>
             </tbody>
           </table>

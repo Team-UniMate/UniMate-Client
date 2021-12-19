@@ -1,6 +1,6 @@
 import React from "react";
 import Router from "next/router";
-import { Router, useRouter } from "next/router";
+import { useRouter } from "next/router";
 import Chat from "./chat";
 const sample = () => {
   const router = useRouter();
@@ -20,7 +20,7 @@ const sample = () => {
             />
           </div>
         </div>
-        <Chat user_idx={router.query.user_idx} />
+        <Chat user_idx={router.query.user_idx} router={router} />
       </div>
     </section>
   );

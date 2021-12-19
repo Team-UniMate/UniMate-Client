@@ -28,14 +28,17 @@ function getCurrentTime() {
   return date.YYYYMMDDHHMMSS();
 }
 
-const socket = io("http://127.0.0.1:4000", {
-  autoConnect: false,
-  forceNew: true,
-});
-let connected = false;
+const socket = io(
+  "http://unimate-db.ceia81qoyvwb.ap-northeast-2.rds.amazonaws.com",
+  {
+    autoConnect: false,
+    forceNew: true,
+  }
+);
+let connected = true;
 
-const ChatComp = React.memo(({ user_idx }) => {
-  console.log("ChatComp user_idx : ", user_idx);
+const ChatComp = React.memo(({ user_idx, router }) => {
+  console.log("ChatComp user_idx : ", user_idx, router);
 
   const [messageList, setMessageList] = useState([]);
   const [message, setMessage] = useState("");
@@ -108,11 +111,13 @@ const ChatComp = React.memo(({ user_idx }) => {
       });
     });
 
-    if (!connected) {
+    if (connected) {
       console.log("connect!");
       socket.connect();
       connected = true;
       console.log("ConversationScreen connect call");
+    } else {
+      console.log("not connected");
     }
   }, []);
 

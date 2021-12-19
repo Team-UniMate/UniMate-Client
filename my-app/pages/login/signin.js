@@ -13,8 +13,10 @@ const signin = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const [signinInput, setSigninInput] = useState({
-    userId: "yoo1",
+    userId: "user4",
     pass: "1234",
+    // userId: "son7",
+    // pass: "1234",
   });
   const handleId = (e) => {
     const { name, value } = e.target;

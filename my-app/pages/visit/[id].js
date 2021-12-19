@@ -3,6 +3,9 @@ import { useRouter } from "next/router";
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
 import { useSelector } from "react-redux";
+import axios from "axios";
+import common from "../../data/common";
+
 /*component*/
 import HeadCont from "../../component_mo/common/HeadCont";
 
@@ -12,17 +15,91 @@ const Page = () => {
   const pageId = router.query.id;
   const prevIcon = { background: "url('/images/prev.svg') no-repeat center" };
   const [birthDate, setBirthDate] = useState(new Date());
+  const [countries, setCountries] = useState([]);
+  const [colleges, setcolleges] = useState([]);
+  const [majors, setMajors] = useState([]);
+  const [personality, setPersonality] = useState([]);
+  const [interest, setInterest] = useState([]);
+  const [lifeStyle, setLifeStyle] = useState([]);
+  const [resultcount, setResultCount] = useState("");
+  const [info, setInfo] = useState([]);
   const [inputs, setInputs] = useState({
-    birth: birthDate,
+    user_idx: user.user_idx,
+    birth: `${new Date(birthDate).getFullYear()}-${new Date(
+      birthDate
+    ).getMonth()}-${new Date(birthDate).getDate()}`,
     sex: "",
-    country_name: "",
+    country_idx: "",
+    college_idx: "",
+    major_idx: "",
+    personality_select: "",
+    interest_select: "",
+    life_style_select: "",
+    self_introduce: "",
+    // profile_images: "",
+    // file: "",
   });
-  console.log(inputs);
+  console.log(inputs, "<<<<<<inputs");
+  useEffect(async () => {
+    await axios
+      .get(common.baseURL + "country")
+      .then((res) => setCountries(res.data.results))
+      .catch((error) => console.log(error));
+    await axios
+      .get(common.baseURL + "college")
+      .then((res) => setcolleges(res.data.results))
+      .catch((error) => console.log(error));
+    await axios
+      .get(common.baseURL + "major")
+      .then((res) => setMajors(res.data.results))
+      .catch((error) => console.log(error));
+    await axios
+      .get(common.baseURL + "personality")
+      .then((res) => setPersonality(res.data.results))
+      .catch((error) => console.log(error));
+    await axios
+      .get(common.baseURL + "interest")
+      .then((res) => setInterest(res.data.results))
+      .catch((error) => console.log(error));
+    await axios
+      .get(common.baseURL + "life_style")
+      .then((res) => setLifeStyle(res.data.results))
+      .catch((error) => console.log(error));
+  }, []);
+
   const onhandleChange = (e) => {
     const { name, value } = e.target;
     setInputs({ ...inputs, [name]: value });
   };
-
+  const uploadImage = async (e) => {
+    // const files = e.target.files;
+    // console.log(files);
+    // const formdata = new FormData();
+    // formdata.append("FormData", inputs.file);
+    // axios
+    //   .post(common.baseURL + "profile_img/upload", formdata, {
+    //     headers: { "Content-type": "multipart/form-data" },
+    //   })
+    //   .then((res) => {
+    //     console.warn(res);
+    //   });
+    let formData = new FormData();
+    formData.append("file", inputs.file[0]);
+    let variables = [
+      {
+        title: "title",
+        content: "content",
+      },
+    ];
+    formData.append(
+      "data",
+      new Blob([JSON.stringify(variables)], { type: "application/json" })
+    );
+    axios
+      .post(common.baseURL + "profile_img/upload", formData)
+      .then((res) => console.log(res))
+      .catch((error) => console.log(error));
+  };
   const [p1, setP1] = useState(false);
   const [p2, setP2] = useState(false);
   const [p3, setP3] = useState(false);
@@ -53,8 +130,15 @@ const Page = () => {
   const [a16, setA16] = useState(false);
   const [a17, setA17] = useState(false);
   const [a18, setA18] = useState(false);
+  const [l1, setL1] = useState(false);
+  const [l2, setL2] = useState(false);
+  const [l3, setL3] = useState(false);
+  const [l4, setL4] = useState(false);
+  const [l5, setL5] = useState(false);
+  const [l6, setL6] = useState(false);
   const colorState =
     "block w-24 py-2 border text-center rounded-full  cursor-pointer";
+  const noState = "block w-24 py-2 text-center rounded-full ";
   const falseState = colorState + " hover:bg-gray-100";
   const trueState = colorState + " bg-gray-100";
 
@@ -88,108 +172,147 @@ const Page = () => {
   const a16Ref = useRef();
   const a17Ref = useRef();
   const a18Ref = useRef();
+  const l1Ref = useRef();
+  const l2Ref = useRef();
+  const l3Ref = useRef();
+  const l4Ref = useRef();
+  const l5Ref = useRef();
+  const l6Ref = useRef();
   let array = [];
   let array2 = [];
-
+  let array3 = [];
   const onClickPersonal = () => {
-    if (p1) {
-      array.push(p1Ref.current.innerText);
+    if (p1 && p1Ref.current.innerText === "발랄한") {
+      array.push(1);
     }
-    if (p2) {
-      array.push(p2Ref.current.innerText);
+    if (p2 && p2Ref.current.innerText === "활동적") {
+      array.push(2);
     }
-    if (p3) {
-      array.push(p3Ref.current.innerText);
+    if (p3 && p3Ref.current.innerText === "집순이") {
+      array.push(3);
     }
-    if (p4) {
-      array.push(p4Ref.current.innerText);
+    if (p4 && p4Ref.current.innerText === "조용한") {
+      array.push(4);
     }
-    if (p5) {
-      array.push(p5Ref.current.innerText);
+    if (p5 && p5Ref.current.innerText === "온화한") {
+      array.push(5);
     }
-    if (p6) {
-      array.push(p6Ref.current.innerText);
+    if (p6 && p6Ref.current.innerText === "유연한") {
+      array.push(6);
     }
-    if (p7) {
-      array.push(p7Ref.current.innerText);
+    if (p7 && p7Ref.current.innerText === "적극적") {
+      array.push(7);
     }
-    if (p8) {
-      array.push(p8Ref.current.innerText);
+    if (p8 && p8Ref.current.innerText === "내향적") {
+      array.push(8);
     }
-    if (p9) {
-      array.push(p9Ref.current.innerText);
+    if (p9 && p9Ref.current.innerText === "규칙적") {
+      array.push(9);
     }
-    if (p10) {
-      array.push(p10Ref.current.innerText);
+    if (p10 && p10Ref.current.innerText === "사교적인") {
+      array.push(10);
     }
-    if (p11) {
-      array.push(p11Ref.current.innerText);
+    if (p11 && p11Ref.current.innerText === "수다쟁이") {
+      array.push(11);
     }
-    if (p12) {
-      array.push(p12Ref.current.innerText);
-    }
-    alert(array);
+    setInputs({ ...inputs, personality_select: array.join() });
     router.push(`4`);
   };
+
   const onClickTaste = () => {
-    if (a1) {
-      array2.push(a1Ref.current.innerText);
+    if (a1 && a1Ref.current.innerTex === "영화") {
+      array2.push(1);
     }
-    if (a2) {
-      array2.push(a2Ref.current.innerText);
+    if (a2 && a2Ref.current.innerText === "음악") {
+      array2.push(2);
     }
-    if (a3) {
-      array2.push(a3Ref.current.innerText);
+    if (a3 && a3Ref.current.innerText === "운동") {
+      array2.push(3);
     }
-    if (a4) {
-      array2.push(a4Ref.current.innerText);
+    if (a4 && a4Ref.current.innerText === "산책") {
+      array2.push(4);
     }
-    if (a5) {
-      array2.push(a5Ref.current.innerText);
+    if (a5 && a5Ref.current.innerText === "반려동물") {
+      array2.push(5);
     }
-    if (a6) {
-      array2.push(a6Ref.current.innerText);
+    if (a6 && a6Ref.current.innerText === "독서") {
+      array2.push(6);
     }
-    if (a7) {
-      array2.push(a7Ref.current.innerText);
+    if (a7 && a7Ref.current.innerText === "드라마") {
+      array2.push(7);
     }
-    if (a8) {
-      array2.push(a8Ref.current.innerText);
+    if (a8 && a8Ref.current.innerText === "인테리어") {
+      array2.push(8);
     }
-    if (a9) {
-      array2.push(a9Ref.current.innerText);
+    if (a9 && a9Ref.current.innerText === "요리") {
+      array2.push(9);
     }
-    if (a10) {
-      array2.push(a10Ref.current.innerText);
+    if (a10 && a10Ref.current.innerText === "맛집탐방") {
+      array2.push(10);
     }
-    if (a11) {
-      array2.push(a11Ref.current.innerText);
+    if (a11 && a11Ref.current.innerText === "외국어") {
+      array2.push(11);
     }
-    if (a12) {
-      array2.push(a12Ref.current.innerText);
+    if (a12 && a12Ref.current.innerText === "글쓰기") {
+      array2.push(12);
     }
-    if (a13) {
-      array2.push(a13Ref.current.innerText);
+    if (a13 && a13Ref.current.innerText === "커피") {
+      array2.push(13);
     }
-    if (a14) {
-      array2.push(a14Ref.current.innerText);
+    if (a14 && a14Ref.current.innerText === "패션") {
+      array2.push(14);
     }
-    if (a15) {
-      array2.push(a15Ref.current.innerText);
+    if (a15 && a15Ref.current.innerText === "건강") {
+      array2.push(15);
     }
-    if (a16) {
-      array2.push(a16Ref.current.innerText);
+    if (a16 && a16Ref.current.innerText === "여행") {
+      array2.push(16);
     }
-    if (a17) {
-      array2.push(a17Ref.current.innerText);
+    if (a17 && a17Ref.current.innerText === "웹툰") {
+      array2.push(17);
     }
-    if (a18) {
-      array2.push(a18Ref.current.innerText);
+    if (a18 && a18Ref.current.innerText === "글쓰기") {
+      array2.push(18);
     }
-    alert(array2);
+    setInputs({ ...inputs, interest_select: array2.join() });
     router.push(`5`);
   };
-
+  const onClickLifestyle = () => {
+    if (l1 && l1Ref.current.innerText === "아침형") {
+      array3.push(1);
+    }
+    if (l2 && l2Ref.current.innerText === "저녁형") {
+      array3.push(2);
+    }
+    if (l3 && l3Ref.current.innerText === "비흡연") {
+      array3.push(3);
+    }
+    if (l4 && l4Ref.current.innerText === "흡연") {
+      array3.push(4);
+    }
+    setInputs({ ...inputs, life_style_select: array3.join() });
+    router.push(`6`);
+  };
+  const submitData = () => {
+    axios
+      .post(common.baseURL + "profile", inputs)
+      .then((res) => {
+        console.log(res);
+        const getData = async () => {
+          await axios
+            .get(common.baseURL + "profile?user_idx=" + user.user_idx)
+            .then((res) => {
+              setInfo(res.data.results);
+            })
+            .catch((error) => console.log(error));
+        };
+        getData();
+      })
+      .catch((error) => console.log(error));
+  };
+  console.log(inputs);
+  console.log(new Object(info[0]).life_style_select, ">>>info");
+  //console.log(typeof info[0].interest_select, "<<<<this is info");
   return (
     <>
       {pageId === "1" ? (
@@ -197,7 +320,7 @@ const Page = () => {
           <HeadCont leftIcon={prevIcon} />
           <div className="fixed top-14 left-0 w-full z-20 bg-gray-200 h-1 shadow-inner"></div>
           <div className="fixed top-14 left-0 w-1/6 z-30 keycolor h-1 shadow-inner"></div>
-          <form className="pt-16">
+          <div className="pt-16">
             <h1 className=" pt-6 text-2xl font-bold text-center">
               나에 대해 알려주세요
             </h1>
@@ -214,8 +337,9 @@ const Page = () => {
               <h2 className="mt-6 pb-3">&middot; 성별을 선택해주세요</h2>
               <select
                 aria-label="Selected tab"
-                className="sex border rounded-2xl form-select w-full py-2 px-3 rounded appearance-none bg-transparent"
+                className="sex border rounded-2xl div-select w-full py-2 px-3 rounded appearance-none bg-transparent"
                 name="sex"
+                onChange={onhandleChange}
               >
                 <option value="">입력값 없음</option>
                 <option value="여성">여성</option>
@@ -224,17 +348,18 @@ const Page = () => {
               <h2 className="mt-6 pb-3">&middot; 출신 국가를 알려주세요</h2>
               <select
                 aria-label="Selected tab"
-                className="nation border rounded-2xl form-select w-full py-2 px-3 rounded appearance-none bg-transparent"
-                name="nation"
+                className="country_idx border rounded-2xl div-select w-full py-2 px-3 rounded appearance-none bg-transparent"
+                name="country_idx"
+                onChange={onhandleChange}
               >
                 <option value="">입력값 없음</option>
-                <option value="한국">한국</option>
-                <option value="미국">미국</option>
-                <option value="중국">중국</option>
-                <option value="그외">그외</option>
+                {countries.map((el, index) => (
+                  <option key={index} value={el.country_idx}>
+                    {el.country_idx ? el.country_name : ""}
+                  </option>
+                ))}
               </select>
             </div>
-
             <div className="fixed bottom-4 left-0 w-full px-4 ">
               <button
                 onClick={() => {
@@ -245,7 +370,7 @@ const Page = () => {
                 다음
               </button>
             </div>
-          </form>
+          </div>
         </div>
       ) : (
         ""
@@ -255,35 +380,38 @@ const Page = () => {
           <HeadCont leftIcon={prevIcon} />
           <div className="fixed top-14 left-0 w-full z-20 bg-gray-200 h-1 shadow-inner"></div>
           <div className="fixed top-14 left-0 w-2/6 z-30 keycolor h-1 shadow-inner"></div>
-          <form className="pt-16">
+          <div className="pt-16">
             <h1 className=" pt-6 text-2xl font-bold text-center">
               소속대학과 학과를 알려주세요
             </h1>
             <div className="mt-14 text-base">
               <h2 className="pb-3">&middot; 소속대학을 선택해주세요</h2>
-
               <select
                 aria-label="Selected tab"
-                className="university border rounded-2xl form-select w-full py-2 px-3 rounded appearance-none bg-transparent"
-                name="university"
+                className="college_idx border rounded-2xl div-select w-full py-2 px-3 rounded appearance-none bg-transparent"
+                name="college_idx"
+                onChange={onhandleChange}
               >
                 <option value="">입력값 없음</option>
-                <option value="A대학교">A대학교</option>
-                <option value="B대학교">B대학교</option>
-                <option value="C대학교">C대학교</option>
-                <option value="그외">그외</option>
+                {colleges.map((el, index) => (
+                  <option key={index} value={el.college_idx}>
+                    {el.college_idx ? el.college_name : ""}
+                  </option>
+                ))}
               </select>
               <h2 className="mt-6 pb-3">&middot; 학과를 알려주세요</h2>
               <select
                 aria-label="Selected tab"
-                className="nation border rounded-2xl form-select w-full py-2 px-3 rounded appearance-none bg-transparent"
-                name="nation"
+                className="major_name border rounded-2xl div-select w-full py-2 px-3 rounded appearance-none bg-transparent"
+                name="major_idx"
+                onChange={onhandleChange}
               >
                 <option value="">입력값 없음</option>
-                <option value="컴퓨터공학과">컴퓨터공학과</option>
-                <option value="유아교육과">유아교육과</option>
-                <option value="디자인과">디자인과</option>
-                <option value="그외">그외</option>
+                {majors.map((el, index) => (
+                  <option key={index} value={el.major_idx}>
+                    {el.major_idx ? el.major_name : ""}
+                  </option>
+                ))}
               </select>
             </div>
 
@@ -297,7 +425,7 @@ const Page = () => {
                 다음
               </button>
             </div>
-          </form>
+          </div>
         </div>
       ) : (
         ""
@@ -307,7 +435,7 @@ const Page = () => {
           <HeadCont leftIcon={prevIcon} />
           <div className="fixed top-14 left-0 w-full z-20 bg-gray-200 h-1 shadow-inner"></div>
           <div className="fixed top-14 left-0 w-3/6 z-30 keycolor h-1 shadow-inner"></div>
-          <form className="pt-16">
+          <div className="pt-16">
             <h1 className=" pt-6 text-2xl font-bold text-center">
               성향을 알려주세요
             </h1>
@@ -316,7 +444,6 @@ const Page = () => {
                 &middot; 키워드는 최소 3개 이상 선택해주세요
               </h2>
             </div>
-
             <div className="flex flex-wrap justify-between gap-x-8 gap-y-4">
               <span
                 ref={p1Ref}
@@ -417,15 +544,7 @@ const Page = () => {
               >
                 수다쟁이
               </span>
-              <span
-                ref={p12Ref}
-                onClick={() => {
-                  setP12(!p12);
-                }}
-                className={p12 ? trueState : falseState}
-              >
-                깔끔한
-              </span>
+              <span className={noState}></span>
             </div>
             <div className="fixed bottom-4 left-0 w-full px-4">
               <button
@@ -435,7 +554,7 @@ const Page = () => {
                 다음
               </button>
             </div>
-          </form>
+          </div>
         </div>
       ) : (
         ""
@@ -445,7 +564,7 @@ const Page = () => {
           <HeadCont leftIcon={prevIcon} />
           <div className="fixed top-14 left-0 w-full z-20 bg-gray-200 h-1 shadow-inner"></div>
           <div className="fixed top-14 left-0 w-4/6 z-30 keycolor h-1 shadow-inner"></div>
-          <form className="pt-16">
+          <div className="pt-16">
             <h1 className=" pt-6 text-2xl font-bold text-center">
               관심사를 알려주세요
             </h1>
@@ -454,7 +573,6 @@ const Page = () => {
                 &middot; 키워드는 최소 3개 이상 선택해주세요
               </h2>
             </div>
-
             <div className="flex flex-wrap justify-between gap-x-8 gap-y-4">
               <span
                 ref={a1Ref}
@@ -627,7 +745,7 @@ const Page = () => {
                 다음
               </button>
             </div>
-          </form>
+          </div>
         </div>
       ) : (
         ""
@@ -637,57 +755,66 @@ const Page = () => {
           <HeadCont leftIcon={prevIcon} />
           <div className="fixed top-14 left-0 w-full z-20 bg-gray-200 h-1 shadow-inner"></div>
           <div className="fixed top-14 left-0 w-5/6 z-30 keycolor h-1 shadow-inner"></div>
-          <form className="pt-16">
+          <div className="pt-16">
             <h1 className=" pt-6 text-2xl font-bold text-center">
               라이프스타일을 알려주세요
             </h1>
-            <div className="mt-14 text-base">
-              <h2 className="pb-3">&middot; 생활패턴을 선택해주세요</h2>
-
-              <select
-                aria-label="Selected tab"
-                className="daynight border rounded-2xl form-select w-full py-2 px-3 rounded appearance-none bg-transparent"
-                name="daynight"
-              >
-                <option value="">입력값 없음</option>
-                <option value="아침형">아침형</option>
-                <option value="저녁형">저녁형</option>
-              </select>
-              <h2 className="mt-6 pb-3">&middot; 흡연여부를 선택해주세요</h2>
-              <select
-                aria-label="Selected tab"
-                className="smoke border rounded-2xl form-select w-full py-2 px-3 rounded appearance-none bg-transparent"
-                name="smoke"
-              >
-                <option value="">입력값 없음</option>
-                <option value="비흡연">비흡연</option>
-                <option value="흡연">흡연</option>
-              </select>
-              <h2 className="mt-6 pb-3">
-                &middot; 반려동물 유무를 선택해주세요
-              </h2>
-              <select
-                aria-label="Selected tab"
-                className="pet border rounded-2xl form-select w-full py-2 px-3 rounded appearance-none bg-transparent"
-                name="pet"
-              >
-                <option value="">입력값 없음</option>
-                <option value="있음">있음</option>
-                <option value="없음">없음</option>
-              </select>
+            <div className="mt-14 text-base flex items-center">
+              <strong className="w-1/3">생활패턴</strong>
+              <div className="w-2/3 flex flex-wrap justify-between gap-x-8 gap-y-4">
+                <span
+                  ref={l1Ref}
+                  onClick={() => {
+                    setL1(!l1);
+                  }}
+                  className={l1 ? trueState : falseState}
+                >
+                  아침형
+                </span>
+                <span
+                  ref={l2Ref}
+                  onClick={() => {
+                    setL2(!l2);
+                  }}
+                  className={l2 ? trueState : falseState}
+                >
+                  저녁형
+                </span>
+              </div>
+            </div>
+            <div className="mt-14 text-base flex items-center">
+              <strong className="w-1/3">흡연여부</strong>
+              <div className="w-2/3 flex flex-wrap justify-between gap-x-8 gap-y-4">
+                <span
+                  ref={l3Ref}
+                  onClick={() => {
+                    setL3(!l3);
+                  }}
+                  className={l3 ? trueState : falseState}
+                >
+                  비흡연
+                </span>
+                <span
+                  ref={l4Ref}
+                  onClick={() => {
+                    setL4(!l4);
+                  }}
+                  className={l4 ? trueState : falseState}
+                >
+                  흡연
+                </span>
+              </div>
             </div>
 
             <div className="fixed bottom-4 left-0 w-full px-4">
               <button
-                onClick={() => {
-                  router.push(`6`);
-                }}
+                onClick={onClickLifestyle}
                 className="keycolor w-full text-white py-4 rounded-2xl font-bold hover:bg-purple-600"
               >
                 다음
               </button>
             </div>
-          </form>
+          </div>
         </div>
       ) : (
         ""
@@ -697,12 +824,16 @@ const Page = () => {
           <HeadCont leftIcon={prevIcon} />
           <div className="fixed top-14 left-0 w-full z-20 bg-gray-200 h-1 shadow-inner"></div>
           <div className="fixed top-14 left-0 w-full z-30 keycolor h-1 shadow-inner"></div>
-          <form className="pt-16 h-full">
+          <div className="pt-16 h-full">
             <h1 className=" pt-6 text-2xl font-bold text-center">
               자신을 소개해주세요
             </h1>
-            <textarea className="w-full h-2/3 border mt-4 p-4" />
-
+            <textarea
+              className="w-full h-2/3 border mt-4 p-4"
+              name="self_introduce"
+              value={inputs.self_introduce}
+              onChange={onhandleChange}
+            />
             <div className="fixed bottom-4 left-0 w-full px-4">
               <button
                 onClick={() => {
@@ -713,7 +844,7 @@ const Page = () => {
                 다음
               </button>
             </div>
-          </form>
+          </div>
         </div>
       ) : (
         ""
@@ -723,23 +854,30 @@ const Page = () => {
           <HeadCont leftIcon={prevIcon} />
           <div className="fixed top-14 left-0 w-full z-20 bg-gray-200 h-1 shadow-inner"></div>
           <div className="fixed top-14 left-0 w-full z-30 keycolor h-1 shadow-inner"></div>
-          <form className="pt-16 h-full">
+          <div className="pt-16 h-full">
             <h1 className=" pt-6 text-2xl font-bold text-center">
               프로필 사진을 등록해주세요
             </h1>
             <div className="w-full flex items-center justify-center pt-16 flex flex-col">
-              <div className="p-4 w-48 h-48 bg-gray-100 rounded-2xl"></div>
+              <input
+                type="file"
+                name="file"
+                placeholder="upload image"
+                onChange={onhandleChange}
+                className="p-4 w-48 h-48 bg-gray-100 rounded-2xl"
+              ></input>
               <span
                 className=" mt-6 keycolor hover:bg-purple-600 py-2 w-28 block rounded-full text-white font-bold text-2xl
               cursor-pointer text-center hover:bg-purple-600"
+                onClick={uploadImage}
               >
                 등록
               </span>
             </div>
-
             <div className="fixed bottom-4 left-0 w-full px-4">
               <button
                 onClick={() => {
+                  submitData();
                   router.push(`8`);
                 }}
                 className="keycolor w-full text-white py-4 rounded-2xl font-bold hover:bg-purple-600"
@@ -747,7 +885,7 @@ const Page = () => {
                 다음
               </button>
             </div>
-          </form>
+          </div>
         </div>
       ) : (
         ""
@@ -757,64 +895,65 @@ const Page = () => {
           <HeadCont leftIcon={prevIcon} />
           <div className="fixed top-14 left-0 w-full z-20 bg-gray-200 h-1 shadow-inner"></div>
           <div className="fixed top-14 left-0 w-full z-30 bg-gray-100 h-1 shadow-inner"></div>
-          <form className="pt-16 ">
+          <div className="pt-16 ">
             <div className="bg-white w-full py-6 flex flex-col items-center">
               <span className="w-24 h-24 rounded-full block bg-gray-100 flex justify-center items-center">
                 image
               </span>
-              <span>닉네임</span>
-              <div className="w-28 flex justify-between ">
-                <span className="bg-gray-100 inline-block px-2 py-1 rounded-xl">
-                  남성
+              <span>{new Object(info[0]).user_name}</span>
+              <div className="w-60 flex justify-center">
+                <span className="bg-gray-100 inline-block px-2 py-1 rounded-xl mx-1">
+                  {new Object(info[0]).sex}
                 </span>
-                <span className="px-2 py-1 ">한국</span>
+                <span className="mx-1 px-2 py-1 border rounded-full">
+                  {new Object(info[0]).country_name}
+                </span>
               </div>
             </div>
             <div className="bg-gray-100 w-full h-4 "></div>
             <div className="mt-4 bg-white">
-              <div className=" p-4">
-                <strong className="w-20 inline-block">성향</strong>
-                <span className="border-2 keyBorder px-2 py-1 rounded-2xl box-content">
-                  온화한
-                </span>
+              <div className=" p-2 flex">
+                <strong className="w-2/6 inline-block">성향</strong>
+                <div className="w-4/6">
+                  {new Object(info[0]).personality_select}
+                </div>
               </div>
-              <div className=" p-4">
-                <strong className="w-20 inline-block">관심사</strong>
-                <span className=" keycolor px-2 py-1 rounded-2xl">커피</span>
+              <div className=" p-2 flex">
+                <strong className="w-2/6 inline-block">관심사</strong>
+                <div className="w-4/6">
+                  {new Object(info[0]).interest_select}
+                </div>
               </div>
-              <div className=" p-4">
-                <strong className="w-20 inline-block">학과</strong>
-                <span>컴퓨터공학과</span>
+              <div className=" p-2 flex">
+                <strong className="w-2/6 inline-block">학과</strong>
+                <div className="w-4/6">{new Object(info[0]).major_name}</div>
               </div>
-              <div className=" p-4">
-                <strong className="w-20 inline-block">생활패턴</strong>
-                <span>아침형</span>
+              <div className=" p-2 flex">
+                <strong className="w-2/6 inline-block">
+                  생활패턴/흡연여부
+                </strong>
+                <div className="w-4/6">
+                  {new Object(info[0]).life_style_select}
+                </div>
               </div>
-              <div className=" p-4">
-                <strong className="w-20 inline-block">흡연여부</strong>
-                <span>비흡연</span>
-              </div>
-              <div className=" p-4">
-                <strong className="w-20 inline-block">반려동물</strong>
-                <span>없음</span>
-              </div>
-              <div className=" p-4">
-                <strong className="w-20 inline-block">자기소개</strong>
-                <span>없음</span>
+              <div className=" p-2 flex">
+                <strong className="w-2/6 inline-block">자기소개</strong>
+                <div className="w-4/6">
+                  {new Object(info[0]).self_introduce}
+                </div>
               </div>
             </div>
             <div className="fixed bottom-4 left-0 w-full px-4">
               <button
-                onClick={() => {
-                  router.push(`/login/signin`);
-                  console.log(router);
-                }}
                 className="keycolor w-full text-white py-4 rounded-2xl font-bold hover:bg-purple-600"
+                onClick={() => {
+                  router.push("/main");
+                }}
               >
                 완료
               </button>
             </div>
-          </form>
+          </div>
         </div>
       ) : (
         ""

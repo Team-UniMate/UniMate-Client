@@ -1,9 +1,10 @@
 import React from "react";
-
+import { useRouter } from "next/router";
 /*component*/
 import HeadCont from "../../../component_mo/common/HeadCont";
 import MainNav from "../../../component_mo/common/MainNav";
 const roommate = () => {
+  const router = useRouter();
   const prevIcon = { background: "url('/images/prev.svg') no-repeat center" };
   return (
     <div className="items-center h-screen">

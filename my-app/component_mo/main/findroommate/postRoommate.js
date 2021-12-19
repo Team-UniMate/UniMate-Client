@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import common from "../../../data/common";
 import { useSelector } from "react-redux";
-const postRoommate = ({ showRoommatePost }) => {
+const postRoommate = ({ showRoommatePost, setResults }) => {
   const [textField, setTextField] = useState({ postCont: "" });
   const user = useSelector((state) => state.app.applogin);
   console.log(user);
@@ -15,7 +15,6 @@ const postRoommate = ({ showRoommatePost }) => {
     e.preventDefault();
     let body = {
       user_idx: user.user_idx,
-      // user_idx: 4,
       post_content: textField.postCont,
     };
     axios
@@ -24,6 +23,13 @@ const postRoommate = ({ showRoommatePost }) => {
         console.log(res);
         if (res.data.results) {
           alert("글이 작성되었습니다.");
+          const getData = async () => {
+            axios
+              .get(common.baseURL + "post")
+              .then((res) => setResults(res.data.results))
+              .catch((error) => console.log(error));
+          };
+          getData();
         } else {
           alert("글 작성에 오류가있습니다");
         }

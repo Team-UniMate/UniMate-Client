@@ -6,14 +6,21 @@ import HeadCont from "../../component_mo/common/HeadCont";
 
 const searchpass = () => {
   const [findPass, setFindPass] = useState({
-    name: "",
-    email: "",
+    user_id: "",
+    user_mail: "",
   });
   const handleInput = (e) => {
     const { name, value } = e.target;
     setFindPass({ ...findPass, [name]: value });
   };
-  console.log(findPass);
+
+  const submitData = (e) => {
+    e.preventDefault();
+    axios
+      .post(common.baseURL + "mail/forgot-password", findPass)
+      .then((res) => console.log(res))
+      .catch((error) => console.log(errorMessage));
+  };
 
   const prevIcon = { background: "url('/images/prev.svg') no-repeat center" };
   return (
@@ -23,7 +30,7 @@ const searchpass = () => {
         <h2 className="mt-14 font-bold">
           등록하신 아이디와 이메일 주소를 입력해주세요.
         </h2>
-        <form className="mt-8">
+        <form className="mt-8" onSubmit={submitData}>
           <div className="w-full h-14 border rounded-3xl tracking-wide ">
             <label htmlFor="ID" className="w-1/5 text-sm inline-block px-4">
               ID
@@ -31,8 +38,8 @@ const searchpass = () => {
             <input
               id="ID"
               className="h-full w-4/5 rounded-3xl px-4"
-              name="userId"
-              value={findPass.userId}
+              name="user_id"
+              value={findPass.user_id}
               onChange={handleInput}
             />
           </div>
@@ -43,12 +50,15 @@ const searchpass = () => {
             <input
               id="MAIL"
               className=" h-full w-4/5 rounded-3xl px-4"
-              name="email"
-              value={findPass.email}
+              name="user_mail"
+              value={findPass.user_mail}
               onChange={handleInput}
             />
           </div>
-          <button className="w-full py-4 keycolor text-white rounded-3xl font-bold tracking-wide text-center mt-8 hover:bg-purple-600 transition duration-150 ease-in-out">
+          <button
+            tyle="submit"
+            className="w-full py-4 keycolor text-white rounded-3xl font-bold tracking-wide text-center mt-8 hover:bg-purple-600 transition duration-150 ease-in-out"
+          >
             Send
           </button>
         </form>

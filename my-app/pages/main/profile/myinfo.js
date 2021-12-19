@@ -27,16 +27,8 @@ const myinfo = () => {
           <table>
             <tbody className="flex flex-col">
               <tr className="pb-2 inline-block">
-                <td className="w-20">이메일</td>
+                <td className="w-20 block">이메일</td>
                 <td>{user.user_mail}</td>
-              </tr>
-              <tr className="pb-2 inline-block">
-                <td className="w-20">이름</td>
-                <td>{user.user_name}</td>
-              </tr>
-              <tr className="pb-2 inline-block">
-                <td className="w-20">성별</td>
-                <td></td>
               </tr>
             </tbody>
           </table>

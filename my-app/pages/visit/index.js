@@ -13,7 +13,9 @@ const visit = () => {
     <div className="w-full h-screen flex flex-col justify-center items-center  ">
       <HeadCont leftIcon={prevIcon} headerTitle={"프로필 정보"} />
       <div className="mt-14 flex items-center flex-col">
-        <span className="w-20 h-20 bg-gray-100 block">image</span>
+        <span className="w-20 h-20 bg-gray-100 block flex justify-center items-center">
+          no image
+        </span>
         <h1>{user.user_id}님</h1>
         <div className="py-12 text-center">
           <p>아직 프로필을 작성하지 않으셨네요!</p>
